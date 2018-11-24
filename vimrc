@@ -1,3 +1,5 @@
+" Clone from https://github.com/fatih/vim-go-tutorial/blob/master/vimrc
+"
 " A sensible vimrc for Go development
 "
 " Please note that the following settings are some default that I used
@@ -6,13 +8,28 @@
 " needs. Think of a vimrc as a garden that needs to be maintained and fostered
 " throughout years. Keep it clean and useful - Fatih Arslan
 
-call plug#begin()
-Plug 'fatih/vim-go'
-Plug 'fatih/molokai'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'SirVer/ultisnips'
-Plug 'ctrlpvim/ctrlp.vim'
-call plug#end()
+" call plug#begin()
+" Plug 'fatih/vim-go'
+" Plug 'fatih/molokai' " color scheme 'molokai'
+" Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'SirVer/ultisnips'
+" Plug 'ctrlpvim/ctrlp.vim'
+" call plug#end()
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugins/gocode/vim/symlink.sh' }
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 
 """"""""""""""""""""""
 "      Settings      "
@@ -20,23 +37,25 @@ call plug#end()
 set nocompatible                " Enables us Vim specific features
 filetype off                    " Reset filetype detection first ...
 filetype plugin indent on       " ... and enable filetype detection
+set encoding=utf-8              " Set default encoding to UTF-8
+set splitright                  " Vertical windows should be split to right
+set splitbelow                  " Horizontal windows should split to bottom
+set number                      " Show line numbers
+set hlsearch                    " Highlight found searches
+
+
 set ttyfast                     " Indicate fast terminal conn for faster redraw
 set ttymouse=xterm2             " Indicate terminal type for mouse codes
 set ttyscroll=3                 " Speedup scrolling
 set laststatus=2                " Show status line always
-set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically read changed files
 set autoindent                  " Enabile Autoindent
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set incsearch                   " Shows the match while typing
-set hlsearch                    " Highlight found searches
 set noerrorbells                " No beeps
-set number                      " Show line numbers
 set showcmd                     " Show me what I'm typing
 set noswapfile                  " Don't use swapfile
 set nobackup                    " Don't create annoying backup files
-set splitright                  " Vertical windows should be split to right
-set splitbelow                  " Horizontal windows should split to bottom
 set autowrite                   " Automatically save before :next, :make etc.
 set hidden                      " Buffer should still exist if window is closed
 set fileformats=unix,dos,mac    " Prefer Unix over Windows over OS 9 formats
@@ -49,6 +68,18 @@ set pumheight=10                " Completion window max size
 set nocursorcolumn              " Do not highlight column (speeds up highlighting)
 set nocursorline                " Do not highlight cursor (speeds up highlighting)
 set lazyredraw                  " Wait to redraw
+
+
+set tabstop=4                   " tab键的宽度
+set softtabstop=4               " 统一缩进为4
+
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+" Enable folding with the spacebar
+nnoremap <space> za
+
 
 " Enable to copy to clipboard for operations like yank, delete, change and put
 " http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
@@ -68,11 +99,31 @@ syntax enable
 set t_Co=256
 let g:rehash256 = 1
 let g:molokai_original = 1
-colorscheme molokai
+" colorscheme molokai " " 配置色彩主题
+
+" 使用浅色高亮當前行
+autocmd InsertLeave * se nocul
+autocmd InsertEnter * se cul
 
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
+
+" 切换 buffer
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> [n :bnext<CR>
+
+"split navigations
+" use ctrl+h/j/k/l switch window
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" 取代 'ESC' key 
+map! jj <Esc> " map jj to Esc
+map! ;; <Esc> " map ;; to Esc
+
 
 " Set leader shortcut to a comma ','. By default it's the backslash
 let mapleader = ","
@@ -171,3 +222,8 @@ function! s:build_go_files()
     call go#cmd#Build(0)
   endif
 endfunction
+
+" Sudo to write
+cnoremap w!! w !sudo tee % >/dev/null
+" json 格式化
+com! FormatJSONPy2Utf8 %!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), ensure_ascii=False, indent=2)"
