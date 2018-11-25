@@ -24,10 +24,15 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugins/gocode/vim/symlink.sh' }
-Plugin 'powerline/powerline', { 'rtp': 'powerline/bindings/vim/' }
+" Plugin 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugins/gocode/vim/symlink.sh' }
+
+" Plugin 'powerline/powerline', { 'rtp': 'powerline/bindings/vim/' }
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -173,6 +178,12 @@ let g:go_highlight_generate_tags = 1
 " Open :GoDeclsDir with ctrl-g
 nmap <C-g> :GoDeclsDir<cr>
 imap <C-g> <esc>:<C-u>GoDeclsDir<cr>
+
+
+" Plugin 'vim-airline/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 augroup go
