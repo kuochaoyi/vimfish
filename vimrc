@@ -27,6 +27,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugins/gocode/vim/symlink.sh' }
+Plugin 'powerline/powerline', { 'rtp': 'powerline/bindings/vim/' }
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -72,6 +73,7 @@ set lazyredraw                  " Wait to redraw
 
 set tabstop=4                   " tab键的宽度
 set softtabstop=4               " 统一缩进为4
+set textwidth=79
 
 
 " Enable folding
