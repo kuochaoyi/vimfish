@@ -14,80 +14,54 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin()
-" call plug#begin('~/.vim/plugged)
+" call plug#begin()
 " Plug 'fatih/vim-go'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Plug 'Valloric/YouCompleteMe'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-Plug 'tenfyzhong/CompleteParameter.vim'
 " Plug 'fatih/molokai' " color scheme 'molokai'
 " Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'SirVer/ultisnips'
 " Plug 'ctrlpvim/ctrlp.vim'
-call plug#end()
-
-" Plug 'Shougo/deoplete.nvim'
-let g:deoplete#enable_at_startup = 1
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-
-
-" 让NERDTree插件，在第一次被触发的时候才加载
-"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-
-" 让YCM插件在打开go源代码文件时才被加载
-"Plug 'Valloric/YouCompleteMe', { 'for': 'go' }
+" call plug#end()
 
 " set the runtime path to include Vundle and initialize
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-" Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 " Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Plugin 'fatih/vim-go'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 " Plugin 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugins/gocode/vim/symlink.sh' }
 
 " Plugin 'powerline/powerline', { 'rtp': 'powerline/bindings/vim/' }
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " All of your Plugins must be added before the following line
-" call vundle#end()            " required
+call vundle#end()            " required
 
 """"""""""""""""""""""
 "      Settings      "
 """"""""""""""""""""""
 set nocompatible                " Enables us Vim specific features
+set number                      " Show line numbers
+
+
 filetype off                    " Reset filetype detection first ...
 filetype plugin indent on       " ... and enable filetype detection
-set encoding=utf-8              " Set default encoding to UTF-8
 set splitright                  " Vertical windows should be split to right
 set splitbelow                  " Horizontal windows should split to bottom
-set number                      " Show line numbers
 set hlsearch                    " Highlight found searches
 
+" nvim default value
+set encoding=utf-8              " Set default encoding to UTF-8
 
 set ttyfast                     " Indicate fast terminal conn for faster redraw
-" set ttymouse=xterm2             " Indicate terminal type for mouse codes
-" set ttyscroll=3                 " Speedup scrolling
+set ttymouse=xterm2             " Indicate terminal type for mouse codes
+set ttyscroll=3                 " Speedup scrolling
 set laststatus=2                " Show status line always
 set autoread                    " Automatically read changed files
 set autoindent                  " Enabile Autoindent
@@ -275,38 +249,3 @@ endfunction
 cnoremap w!! w !sudo tee % >/dev/null
 " json 格式化
 com! FormatJSONPy2Utf8 %!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), ensure_ascii=False, indent=2)"
-
-" https://github.com/tenfyzhong/CompleteParameter.vim
-inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-" The parameter of complete_parameter#pre_complete will be insert if parameter completion failed.
-
-" Mapping
-" <Plug>(complete_parameter#goto_next_parameter)
-" Goto next parameter and select it.
-
-nmap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-" <Plug>(complete_parameter#goto_previous_parameter)
-" Goto previous parameter and select it.
-
-nmap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-" <Plug>(complete_parameter#overload_down)
-" Select next overload function.
-
-
-nmap <m-d> <Plug>(complete_parameter#overload_down)
-imap <m-d> <Plug>(complete_parameter#overload_down)
-smap <m-d> <Plug>(complete_parameter#overload_down)
-" <Plug>(complete_parameter#overload_up)
-" Select previous overload function.
-
-nmap <m-u> <Plug>(complete_parameter#overload_up)
-imap <m-u> <Plug>(complete_parameter#overload_up)
-smap <m-u> <Plug>(complete_parameter#overload_up)

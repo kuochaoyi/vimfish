@@ -1,23 +1,10 @@
-# Required:
-[[plugins]]
-repo = 'Shougo/dein.vim'
+" [fatih/vim-go]
 
+    au FileType go set noexpandtab
+    au FileType go set shiftwidth=4
+    au FileType go set softtabstop=4
+    au FileType go set tabstop=4
 
-# color scheme 'molokai'
-# $ln -s ~/.cache/dein/repos/github.com/fatih/molokai/colors/molokai.vim molokai.vim
-[[plugins]]
-repo = 'fatih/molokai'
-hook_add = '''
-    set t_Co=256
-    colorscheme molokai
-    let g:rehash256 = 1
-    let g:molokai_original = 1
-'''
-
-
-[[plugins]]
-repo = 'fatih/vim-go'
-hook_add = '''
     " let g:go_fmt_command = "goimports"
     let g:go_def_mapping_enabled = 0
     let g:go_doc_keywordprg_enabled = 0
@@ -37,6 +24,13 @@ hook_add = '''
     let g:go_highlight_function_calls = 1
     let g:go_highlight_extra_types = 1
     let g:go_highlight_generate_tags = 1
+
+    let g:go_highlight_build_constraints = 1
+    let g:go_highlight_methods = 1
+    let g:go_highlight_operators = 1
+    let g:go_highlight_structs = 1
+
+    let g:go_auto_sameids = 1
 
     " Open :GoDeclsDir with ctrl-g
     nmap <C-g> :GoDeclsDir<cr>
@@ -92,44 +86,3 @@ hook_add = '''
         call go#cmd#Build(0)
     endif
     endfunction
-'''
-
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-on_event = 'InsertEnter'
-hook_add = '''
-    let g:deoplete#enable_at_startup = 1
-'''
-
-# $go get -u golang.org/x/tools/cmd/golsp
-# cd /go/src/golang.org/x/tools/cmd/golsp
-[[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-rev = 'next'
-build = 'bash install.sh'
-hook_add = '''
-    set hidden                      " Buffer should still exist if window is closed
-
-    let g:LanguageClient_serverCommands = {
-        \ 'go': ['golsp']
-        \ }
-
-    let g:LanguageClient_loadSettings = 1
-
-    "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-    " Or map each action separately
-    nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-    "nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
-    " Always draw sign column. Prevent buffer moving when adding/deleting sign.
-    set signcolumn=yes
-
-    " let g:LanguageClient_loggingLevel = 'INFO'
-    " let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
-    " let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
-
-    " golsp
-    set runtimepath+=~/.cache/dein/repos/github.com/autozimu/LanguageClient-neovim
-'''

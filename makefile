@@ -1,10 +1,15 @@
 ssh:
 	ssh u0_a77@192.168.0.12 -p 8022 -i ~/.ssh/asusZenPad3s
 
-
-install:
+vim-conf:
 	scp -i ~/.ssh/asusZenPad3s -P 8022 vimrc \
-		u0_a77@192.168.0.12:~/.vimrc \
+		u0_a77@192.168.0.12:~/.vimrc
 
-ssh:
-	ssh -p 8022 u0_a77@192.168.0.12 -i ~/.ssh/asusZenPad3s 
+tmux-conf:
+	# echo “tmux” >> ~/.bashrc
+	# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	scp -i ~/.ssh/asusZenPad3s -P 8022 tmux.conf \
+		u0_a77@192.168.0.12:~/.tmux.conf
+	# # type this in terminal if tmux is already running
+	# $ tmux source ~/.tmux.conf
+	# prefix + I
