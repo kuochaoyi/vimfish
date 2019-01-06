@@ -23,6 +23,12 @@ set showtabline=2
 
 " set transparency=15
 
+"Search
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set diffopt +=iwhite
 
 " Plugins
 " [fatih/molokai]
